@@ -637,7 +637,9 @@ class SolrSearchQuery(BaseSearchQuery):
                 order_by_list = []
 
             for order_by in self.order_by:
-                if order_by.startswith('-'):
+                if order_by == '?':
+                    order_by_list.append('rand_%04d desc' % random.randint(0, 9999))
+                elif order_by.startswith('-'):
                     order_by_list.append('%s desc' % order_by[1:])
                 else:
                     order_by_list.append('%s asc' % order_by)
